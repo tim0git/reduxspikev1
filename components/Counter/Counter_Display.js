@@ -1,17 +1,23 @@
-import React, {useState} from 'react';
+/* eslint-disable no-shadow */
+import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Counter_Button from './Counter_Button';
+// import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {increaseCounter, decreaseCounter} from '../../actions/index';
 
-const Counter_Display = () => {
-  const [count, setCount] = useState(1);
-
+const Counter_Display = ({
+  count: {count},
+  increaseCounter,
+  decreaseCounter,
+}) => {
   const handlePress = (e) => {
     switch (e) {
       case 'increase':
-        setCount(count + 1);
+        increaseCounter(1);
         break;
       case 'decrease':
-        setCount(count - 1);
+        decreaseCounter(1);
         break;
       default:
         return null;
@@ -29,8 +35,6 @@ const Counter_Display = () => {
   );
 };
 
-export default Counter_Display;
-
 const styles = StyleSheet.create({
   count: {
     justifyContent: 'center',
@@ -43,3 +47,14 @@ const styles = StyleSheet.create({
     marginTop: 200,
   },
 });
+
+const mapStateToProps = (state) => ({
+  count: state.count,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  increaseCounter: (number) => dispatch(increaseCounter(number)),
+  decreaseCounter: (number) => dispatch(decreaseCounter(number)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter_Display);
