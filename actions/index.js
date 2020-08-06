@@ -5,7 +5,7 @@ exports.increaseCounter = (payload) => ({
   payload,
 });
 
-exports.decreaseCounter = (payload) => ({
+exports.decreaseCounter = () => ({
   type: COUNTER.DECREASE,
-  payload,
+  payload: 1,
 });
